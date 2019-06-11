@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Euphoria+Script|Oxygen&display=swap');
 
 /** Variable declarations **/
-:root{
+:root {
     --headerHeight: 100px;
 }
 
@@ -25,6 +25,11 @@ header {
     width: 100%;
     z-index: 2;
     text-align: center;
+    overflow: hidden;
+    height: 100px;
+}
+header:hover {
+    height: initial;
 }
 
 main {
@@ -35,7 +40,7 @@ main {
 aside {
     position: fixed;
     left: 1em;
-    top: calc( var(--headerHeight) + 4em ) ;
+    top: calc(var(--headerHeight) + 4em);
     background: white;
     padding: 1em;
     width: 20%;
@@ -45,6 +50,7 @@ aside {
     min-height: 400px;
     z-index: 1;
     box-shadow: 10px 10px 20px silver;
+    opacity: 0.95;
 }
 
 #map {
@@ -52,7 +58,96 @@ aside {
     width: 100%;
 }
 
-header h1{
+header h1 {
     font-family: 'Euphoria Script', cursive;
     font-size: 2.5em;
+}
+
+aside {
+    display: none;
+}
+
+aside.places {
+    display: block;
+    border: solid white 4px;
+    background: lightgreen;
+}
+
+aside.events {
+    display: block;
+    border: solid white 4px;
+    background: lightyellow;
+}
+
+aside.filter {
+    display: block;
+    border: solid white 4px;
+    background: lightblue;
+}
+aside.filter form{
+    display: block;
+}
+
+/** Article buttons **/
+button[name='cancel'],
+button[name='save'],
+.editing button[name='edit'] {
+    display: none;
+}
+
+.editing button[name='cancel'],
+.editing button[name='save'],
+button[name='edit'] {
+    display: inline-block;
+}
+
+aside form {
+    display: none;
+}
+
+aside.editing form {
+    display: block;
+}
+aside .label{
+    width: 30%;
+    display: inline-block;
+}
+
+label[name='neighborhood'] {
+    display: block;
+}
+input[name='neighborhood'] {
+    width: 80%;
+    padding: 0.2em;
+    text-align: center;
+    margin: 0.4em auto;
+    display: block;
+}
+
+
+div.window-control{
+    width: 100%;
+    text-align: right;
+}
+div.actions{
+    position: absolute;
+    bottom: 1em;
+}
+button{
+    background: white;
+    font-family: 'Oxygen', sans-serif;
+    border: solid thin silver;
+    border-radius: 5px;
+    padding: 1em 2em;
+    font-size: 12pt;
+}
+button:hover{
+    cursor: pointer;
+    box-shadow: 0 0 20px white ;
+}
+
+button[name='filter'] {
+    position: absolute;
+    top: 1em;
+    right: 1em;
 }

@@ -2,25 +2,81 @@
 <html lang="en">
 <head>
     <title>My Neighborhood</title>
-    <meta charset="utf-8" >
+    <meta charset="utf-8">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"></script>
-    <script src="app/main.js" defer></script>
     <script src="app/database.js" defer></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA4URcI5aWH3KTq8Fvn-PZeUJD-8mSg1l0&callback=initMap" async defer></script>
-
-    <link href="style/main.css" rel="stylesheet" type="text/css" />
+    <script src="app/main.js" defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA4URcI5aWH3KTq8Fvn-PZeUJD-8mSg1l0&callback=initMap"
+            async defer></script>
+    <link href="style/main.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <header>
     <h1>My neighboorhood</h1>
-    <label for="neighborhood">Neighborhood</label>
-    <input name="neighborhood" data-bind="attr: {value: neighborhood.address() }">
+    <button type="button" name="filter" data-bind="event: {'click': toggleFilter}">Filter</button>
+    <label for="neighborhood">Change the neighborhood</label>
+    <input name="neighborhood" data-bind="value: neighborhood.address, event: {'change': updateNeighborhood}">
 </header>
 <main>
-    <aside id="details">
-        <button name="edit">Edit this data</button>
-        <button name="save">Save this data</button>
+    <aside id="details" data-bind="class: currentItem().type, css: {'editing': editable() }">
+        <div class="window-control">
+            <button type="button" name="close" data-bind="event: {click: clearCurrentItem}">&times;</button>
+        </div>
+        <article id="currentitem" data-bind="with: currentItem()">
+            <h1 data-bind="text: name, value: name"></h1>
+            <p data-bind="text: description, value: description"></p>
+            <i data-bind="text: category, value: category"></i>
+        </article>
+        <div class="actions">
+            <button type="button" name="edit" data-bind="event:{click: toggleEditable}">Edit</button>
+            <button type="button" name="cancel" data-bind="event:{click: cancelEdit}">Cancel</button>
+            <button type="button" name="save" data-bind="event:{click: saveData}">Save</button>
+        </div>
+        <form data-bind="with: currentItem()">
+            <label><span class="label">Name:</span>
+                <input data-bind="value: name" placeholder="Please, provide a name">
+            </label>
+            <label><span class="label">Description:</span>
+                <input data-bind="value: description">
+            </label>
+            <label><span class="label">Category:</span>
+                <input data-bind="value: category">
+            </label>
+        </form>
+    </aside>
+    <aside id="filter" data-bind="css: {'filter': filtering()}">
+        <div class="window-control">
+            <button type="button"  data-bind="event: {'click': toggleFilter}">&times;</button>
+        </div>
+        <h1>Choose the filter criteria</h1>
+        <form data-bind="with: query()">
+            <label>Display events:
+                <input type="checkbox" name="events" data-bind="checked: events, checkedValue: $parent.eventsQuery ">
+            </label>
+            <label>Display places:
+                <input type="checkbox" name="places" data-bind="checked: places, checkedValue: $parent.placesQuery">
+            </label>
+            <div class="details-events">
+                <label><span class="label">Name:</span>
+                    <input data-bind="value: name" placeholder="Please, provide a name">
+                </label>
+                <label><span class="label">Description:</span>
+                    <input data-bind="value: name" placeholder="Please, provide a description">
+                </label>
+                <label><span class="label">Category</span>
+                    <select data-bind="foreach: $parent.eventsCategories()">
+                        <option data-bind="value: $data, text: $data"></option>
+                    </select>
+                </label>
+            </div>
+            <div class="details-places">
+                <label><span class="label">Name:</span>
+                    <input data-bind="value: name" placeholder="Please, provide a name">
+                </label>
+            </div>
+            <button type="button" data-bind="event: {'click': $parent.updateNeighborhood}">Apply</button>
+        </form>
     </aside>
     <section id="map"></section>
 </main>
