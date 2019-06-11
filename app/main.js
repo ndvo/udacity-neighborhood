@@ -3,11 +3,15 @@
 
 var map;
 
+// Initialize the map before KnockOut takes over
 async function initMap() {
+    console.log(ViewModel.neighborhood);
     map = new google.maps.Map(document.getElementById('map'), {
         center: ViewModel.neighborhood,
-        zoom: 8
+        zoom: 16
     });
+    console.log(map);
+    ViewModel.updateNeighborhood();
 }
 
 
@@ -37,10 +41,10 @@ var ajax = {
 var Model = {
     keyring : {
         google: {
-            main: 'AIzaSyD9iD893uoJLTmDwou_YW2rH-dgYU-I22o&callback'
+            main: 'AIzaSyA4URcI5aWH3KTq8Fvn-PZeUJD-8mSg1l0'
         }
     },
-}
+};
 
 
 // ViewModel
@@ -49,7 +53,7 @@ var ViewModel = {
         address: ko.observable('Taguatinga Sul Setor Primavera'),
         lat: 0,
         lng: 0,
-        zoom: 8
+        zoom: 16
     },
     fetcher: {
         map: {
@@ -60,20 +64,12 @@ var ViewModel = {
             success: function(response){
                 ViewModel.neighborhood.lat = response.results[0].geometry.location.lat;
                 ViewModel.neighborhood.lng = response.results[0].geometry.location.lng;
-                if (map === undefined){
-                    var initialStatus = {
-                        center: {
-                            lat: +ViewModel.neighborhood.lat,
-                            lng: +ViewModel.neighborhood.lng
-                        },
-                        zoom: ViewModel.neighborhood.zoom
-                    };
-                    console.log(initialStatus, document.getElementById('map'));
-                    map = new google.maps.Map( document.getElementById('map'), initialStatus );
-                }
+                map.setCenter(ViewModel.neighborhood);
             }
                 ,
-            fail: function(e){this.message.push("It was not possible to retrieve data for this neighborhood")}
+            fail: function(e){
+                console.log('Error geocoding:', e);
+                this.message.push("It was not possible to retrieve data for this neighborhood")}
         },
     },
     updateNeighborhood: function(){

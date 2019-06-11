@@ -1,13 +1,26 @@
 <!DOCTYPE HTML>
-<html>
+<html lang="en">
 <head>
+    <title>My Neighborhood</title>
+    <meta charset="utf-8" >
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"></script>
-    <script src="/app/main.js" defer></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD9iD893uoJLTmDwou_YW2rH-dgYU-I22o&callback=initMap" async defer></script>
+    <script src="app/main.js" defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA4URcI5aWH3KTq8Fvn-PZeUJD-8mSg1l0&callback=initMap" async defer></script>
 
-    <link href="/style/main.css" rel="stylesheet" type="text/css" />
+    <link href="style/main.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
+<header>
+    <h1>My neighboorhood</h1>
+    <label for="neighborhood">Neighborhood</label>
+    <input name="neighborhood" data-bind="attr: {value: neighborhood.address() }">
+</header>
+
+<aside id="details">
+    <button name="edit">Edit this data</button>
+    <button name="save">Save this data</button>
+</aside>
 
 <section id="map"></section>
 
