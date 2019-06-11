@@ -72,6 +72,29 @@ var ViewModel = {
                 this.message.push("It was not possible to retrieve data for this neighborhood")}
         },
     },
+    getPoints: function(query){
+        var types = [[Model.events, query.events], [Model.places, query.places]];
+        var points = [];
+        for (var t=0; t<types.length; t++){
+            if (types[t][1]){
+                var itemList = types[t][0].items;
+                var q = types[t][1];
+                console.log('itemlist e q', itemList, q);
+                for (var i=0; i<itemList.length; i++){
+                    var curr = itemList[i];
+                    console.log('curr', curr);
+                    if ( q.name !== undefined && curr.name.match(q.name) === null )
+                        break;
+                    if ( q.description !== undefined && curr.description.match(q.description) === null )
+                        break;
+                    if ( q.category !== undefined && curr.category !== q.category )
+                        break;
+                    points.push(curr);
+                }
+            }
+        }
+        return points;
+    },
     updateNeighborhood: function(){
         ajax.json(this.fetcher.geocode.url+this.neighborhood.address(), this.fetcher.geocode.success, this.fetcher.geocode.fail);
     },
