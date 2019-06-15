@@ -1,10 +1,14 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
+<<<<<<< HEAD
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+=======
     <title>My Neighborhood</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1.0">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+>>>>>>> 6944f4491f6b97df3fdf3228970186bf53d0a687
     <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"></script>
     <script src="app/database.js" defer></script>
     <script src="app/main.js" defer></script>
@@ -13,6 +17,16 @@
     <link href="style/main.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
+<<<<<<< HEAD
+    <header>
+        <h1>Neighborhood Assistant</h1>
+        <form>
+            <input name="neighborhood" placeholder="Choose a neighborhood" data-bind="attr: {value: neighborhood.address}" >
+        </form>
+    </header>
+
+<section id="map"></section>
+=======
 <header>
     <h1>My neighboorhood</h1>
     <button type="button" name="filter" data-bind="event: {'click': toggleFilter}">Filter</button>
@@ -81,6 +95,7 @@
     </aside>
     <section id="map"></section>
 </main>
+>>>>>>> 6944f4491f6b97df3fdf3228970186bf53d0a687
 
 </body>
 </html>

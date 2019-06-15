@@ -1,3 +1,20 @@
+<<<<<<< HEAD
+html { height: 100% }
+body { height: 100%; margin: 0; padding: 0 }
+
+header{
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1em;
+}
+header input{
+    width: 100%;
+    text-align: center;
+}
+#map { height: 100% }
+
+
+=======
 @import url('https://fonts.googleapis.com/css?family=Euphoria+Script|Oxygen&display=swap');
 
 /** Variable declarations **/
@@ -151,3 +168,4 @@ button[name='filter'] {
     top: 1em;
     right: 1em;
 }
+>>>>>>> 6944f4491f6b97df3fdf3228970186bf53d0a687

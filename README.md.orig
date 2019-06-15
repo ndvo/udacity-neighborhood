@@ -1,5 +1,10 @@
 # udacity-neighborhood
 
+<<<<<<< HEAD
+
+It will display a map of a neighborhood and provide serices from DuckDuckGo and GoogleMaps.
+=======
+This project is being built as a part of the Udacity FullStack Nanodegree.
 
 The goal is to build a interactive application that should display my neighborhood and provide filters for the user to
  select the points he is interested in seeing.
@@ -48,3 +53,4 @@ Here it is:
 - <code>{events: {name: 'Feira'}}</code> should return all events with names matching Feira
 - <code>{events: {name: 'Feira', description: 'nice'}}</code> should return all events with names matching Feira AND
  descriptions matching nice.1
+>>>>>>> 6944f4491f6b97df3fdf3228970186bf53d0a687
