@@ -32,12 +32,11 @@ var ajax = {
 };
 
 
-var queryTpl= {name: '', description: '', category: ''};
 
 function categoryOptions(type){
     var localType = type;
     return function(){
-        var categories = [];
+        var categories = [''];
         var list = [];
         if (ViewModel === undefined) {
             list = Model[initialNeighborhood][localType].items;
@@ -53,19 +52,12 @@ function categoryOptions(type){
 
 // ViewModel
 var ViewModel = {
+    testing: ko.observable(),
     currentItem: ko.observable({name: '', description: '', category: '', type: ''}),
     beforeEdit: ko.observable({name: '', description: '', category: '', type: ''}),
     editable: ko.observable(false),
-    query: ko.observable({events: queryTpl, places: queryTpl}),
+    query: ko.observable({events: {name: '', description: '', category: ''}, places: {name: '', description: '', category: ''}}),
     markers: [],
-    placesQuery: ko.computed(function(){
-        if (ViewModel === undefined) return queryTpl;
-        return ViewModel.query().places ? ViewModel.query().places : queryTpl;
-    }),
-    eventsQuery: ko.computed(function(){
-        if (ViewModel === undefined) return queryTpl;
-        return ViewModel.query().events ? ViewModel.query().events : queryTpl;
-    }),
     eventsCategories: ko.computed(categoryOptions('events')),
     placesCategories: ko.computed(categoryOptions('places')),
     filtering: ko.observable(false),
@@ -141,11 +133,11 @@ var ViewModel = {
                 for (var i = 0; i < itemList.length; i++) {
                     var curr = itemList[i];
                     if (q.name && curr.name.match(q.name) === null)
-                        break;
+                        continue;
                     if (q.description && curr.description.match(q.description) === null)
-                        break;
+                        continue;
                     if (q.category && curr.category !== q.category)
-                        break;
+                        continue;
                     points.push(curr);
                 }
             }

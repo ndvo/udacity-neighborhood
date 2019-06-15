@@ -53,29 +53,35 @@
         <h1>Choose the filter criteria</h1>
         <form data-bind="with: query()">
             <label>Display events:
-                <input type="checkbox" name="events" data-bind="checked: events, checkedValue: $parent.eventsQuery ">
+                <input type="checkbox" name="events" data-bind="checked: events, checkedValue: $parent.query().events ">
             </label>
             <label>Display places:
-                <input type="checkbox" name="places" data-bind="checked: places, checkedValue: $parent.placesQuery">
+                <input type="checkbox" name="places" data-bind="checked: places, checkedValue: $parent.query().places">
             </label>
-            <div class="details-events">
+            <fieldset class="details-events" >
+              <legend>Events</legend>
                 <label><span class="label">Name:</span>
-                    <input data-bind="value: name" placeholder="Please, provide a name">
+                    <input data-bind="value: $parent.query().events.name" placeholder="Please, provide a name">
                 </label>
                 <label><span class="label">Description:</span>
-                    <input data-bind="value: name" placeholder="Please, provide a description">
+                    <input data-bind="value: $parent.query().events.description" placeholder="Please, provide a description">
                 </label>
                 <label><span class="label">Category</span>
-                    <select data-bind="foreach: $parent.eventsCategories()">
-                        <option data-bind="value: $data, text: $data"></option>
-                    </select>
+                    <select data-bind="value:$parent.query().events.category, options: $parent.eventsCategories()"></select>
                 </label>
-            </div>
-            <div class="details-places">
+            </fieldset>
+            <fieldset class="details-events" >
+                <legend>Places</legend>
                 <label><span class="label">Name:</span>
-                    <input data-bind="value: name" placeholder="Please, provide a name">
+                    <input data-bind="value: $parent.query().places.name" placeholder="Please, provide a name">
                 </label>
-            </div>
+                <label><span class="label">Description:</span>
+                    <input data-bind="value: $parent.query().places.description" placeholder="Please, provide a description">
+                </label>
+                <label><span class="label">Category</span>
+                    <select data-bind="value:$parent.query().places.category, options: $parent.placesCategories()"></select>
+                </label>
+            </fieldset>
             <button type="button" data-bind="event: {'click': $parent.updateNeighborhood}">Apply</button>
         </form>
     </aside>

@@ -46,7 +46,7 @@ aside {
     width: 20%;
     max-width: 400px;
     min-width: 300px;
-    height: 50%;
+    min-height: 50%;
     min-height: 400px;
     z-index: 1;
     box-shadow: 10px 10px 20px silver;
