@@ -1,8 +1,15 @@
+html { height: 100% }
+body { height: 100%; margin: 0; padding: 0 }
 
 header{
     max-width: 1200px;
     margin: 0 auto;
+    padding: 1em;
 }
-html { height: 100% }
-body { height: 100%; margin: 0; padding: 0 }
+header input{
+    width: 100%;
+    text-align: center;
+}
 #map { height: 100% }
+
+

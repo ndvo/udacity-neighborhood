@@ -1,3 +1,4 @@
-# movie-trailers
-A movies website for Udacity Nanodegree
 # udacity-neighborhood
+
+
+It will display a map of a neighborhood and provide serices from DuckDuckGo and GoogleMaps.

@@ -1,6 +1,8 @@
 <!DOCTYPE HTML>
 <html>
 <head>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"></script>
     <script src="/app/main.js" defer></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD9iD893uoJLTmDwou_YW2rH-dgYU-I22o&callback=initMap" async defer></script>
@@ -8,6 +10,12 @@
     <link href="/style/main.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
+    <header>
+        <h1>Neighborhood Assistant</h1>
+        <form>
+            <input name="neighborhood" placeholder="Choose a neighborhood" data-bind="attr: {value: neighborhood.address}" >
+        </form>
+    </header>
 
 <section id="map"></section>
 
