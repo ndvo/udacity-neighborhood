@@ -25,9 +25,13 @@
             <button type="button" name="close" data-bind="event: {click: clearCurrentItem}">&times;</button>
         </div>
         <article id="currentitem" data-bind="with: currentItem()">
-            <h1 data-bind="text: name, value: name"></h1>
-            <p data-bind="text: description, value: description"></p>
-            <i data-bind="text: category, value: category"></i>
+            <h1 data-bind="text: name"></h1>
+            <p data-bind="text: description"></p>
+            <i data-bind="text: category"></i>
+            <h3>More info <span class="attribution"><a href="http://duckduckgo.com">from DuckDuckGo</a></span></h2>
+            <p data-bind="text: info"></p>
+            <p class="source" data-bind="text: source"></p>
+            <a data-bind="attr: {href: url}, text: url"></a>
         </article>
         <div class="actions">
             <button type="button" name="edit" data-bind="event:{click: toggleEditable}">Edit</button>

@@ -41,19 +41,23 @@ Model[initialNeighborhood]= {
                     category: 'fun',
                     lat: -15.809131,
                     lng: -48.058253,
-                    type: 'places'
+                    type: 'places',
+                    info: '', source:'', url:''
                 },
                 {
                     name: 'Futsal court', description: 'A court for playing futsal, an indoors soccer', category: 'fun',
-                    lat: -15.806432, lng: -48.058767, type: 'places'
+                    lat: -15.806432, lng: -48.058767, type: 'places',
+                    info: '', source:'', url:''
                 },
                 {
                     name: 'School', description: 'A public school', category: 'education',
-                    lat: -15.808881, lng: -48.063317, type: 'places'
+                    lat: -15.808881, lng: -48.063317, type: 'places',
+                    info: '', source:'', url:''
                 },
                 {
                     name: 'Panificadora', description: 'Bakery and convenience store', category: 'food',
-                    lat: -15.810954, lng: -48.062591, type: 'places'
+                    lat: -15.810954, lng: -48.062591, type: 'places',
+                    info: '', source:'', url:''
                 }
             ]
         },
@@ -67,7 +71,8 @@ Model[initialNeighborhood]= {
                     frequency: 'weekly',
                     lat: -15.809774,
                     lng: -48.062340,
-                    type: 'events'
+                    type: 'events',
+                    info: '', source:'', url:''
                 },
                 {
                     name: 'Torneio do Bicalho',
@@ -76,7 +81,8 @@ Model[initialNeighborhood]= {
                     frequency: 'yearly',
                     lat: -15.808779,
                     lng: -48.062944,
-                    type: 'events'
+                    type: 'events',
+                    info: '', source:'', url:''
                 },
                 {
                     name: 'Festa Junina',
@@ -85,7 +91,8 @@ Model[initialNeighborhood]= {
                     frequency: "yearly",
                     lat: -15.807674,
                     lng: -48.063276,
-                    type: 'events'
+                    type: 'events',
+                    info: '', source:'', url:''
                 }
             ]
         }

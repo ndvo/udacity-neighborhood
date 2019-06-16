@@ -12,7 +12,7 @@ async function initMap() {
 }
 
 var ajax = {
-    json: function (url, success, fail) {
+    json: function (url, success, fail, mediawiki=false) {
         var request = new XMLHttpRequest();
         request.onreadystatechange = function () {
             if (request.readyState === 4) {
@@ -27,6 +27,11 @@ var ajax = {
             }
         };
         request.open("GET", url);
+        if (mediawiki){
+          console.log('tentando');
+          //request.setRequestHeader("Origin", "http://localhost");
+          request.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+        }
         request.send();
     }
 };
@@ -52,9 +57,10 @@ function categoryOptions(type){
 
 // ViewModel
 var ViewModel = {
+    message: [],
     testing: ko.observable(),
-    currentItem: ko.observable({name: '', description: '', category: '', type: ''}),
-    beforeEdit: ko.observable({name: '', description: '', category: '', type: ''}),
+    currentItem: ko.observable({name: '', description: '', category: '', type: '', info: '', source: '', url:'' }),
+    beforeEdit: ko.observable({name: '', description: '', category: '', type: '', info: '', source: '', url: ''}),
     editable: ko.observable(false),
     query: ko.observable({events: {name: '', description: '', category: ''}, places: {name: '', description: '', category: ''}}),
     markers: [],
@@ -62,7 +68,7 @@ var ViewModel = {
     placesCategories: ko.computed(categoryOptions('places')),
     filtering: ko.observable(false),
     clearCurrentItem: function(){
-        ViewModel.currentItem({name: '', description: '', category: '', type: ''});
+        ViewModel.currentItem({name: '', description: '', category: '', type: '', info: '', source: '', url: ''});
     },
     toggleEditable: function () {
         if (!ViewModel.editable()) {
@@ -109,9 +115,29 @@ var ViewModel = {
             ,
             fail: function (e) {
                 console.log('Error geocoding:', e);
-                this.message.push("It was not possible to retrieve data for this neighborhood")
+                ViewModel.message.push("It was not possible to retrieve data for this neighborhood")
             }
         },
+        mediawiki: {
+          url: `https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=`,
+          success: function(response){
+            console.log(response);
+          },
+          fail: function(e){console.log(e)}
+        },
+        duckDuckGo: {
+          url: `https://api.duckduckgo.com/?format=json&q=$`,
+          success: function(response){
+            ViewModel.currentItem().info = response.AbstractText;
+            ViewModel.currentItem().source = response.AbstractSource;
+            ViewModel.currentItem().url = response.AbstractURL;
+            console.log("I'm here", ViewModel.currentItem());
+          },
+          fail: function(e){
+            console.log('Error fetching additional info:', e);
+            ViewModel.message.push("It was not possible to retrieve data for this neighborhood")
+          }
+        }
     },
     // Fetch the mock database for new points using the proto querying language
     getPoints: function (queryObj) {
@@ -144,7 +170,6 @@ var ViewModel = {
         }
         return points;
     },
-    test: function(){console.log('teste');},
     // Updates the markers on the map based on the ViewModel.query
     updatepoints: function (targetMap = map) {
         for (var i = 0; i < ViewModel.markers.length; i++) {
@@ -157,20 +182,30 @@ var ViewModel = {
             return;
         }
         for (var i = 0; i < points.length; i++) {
-            var p = points[i];
-            var latLng = new google.maps.LatLng(p.lat, p.lng);
-            var marker = new google.maps.Marker({
-                position: latLng,
-                title: p.name,
-                map: targetMap,
-            });
-            ViewModel.markers.push(marker);
-            bounds.extend(latLng);
-            var closure = function () {
-                var local = p;
-                return () => ViewModel.currentItem(local)
-            };
-            marker.addListener('click', closure());
+          var p = points[i];
+          var latLng = new google.maps.LatLng(p.lat, p.lng);
+          var marker = new google.maps.Marker({
+            position: latLng,
+            title: p.name,
+            map: targetMap,
+          });
+          ViewModel.markers.push(marker);
+          bounds.extend(latLng);
+          var closure = (function () {
+            var local = p;
+            return function(){
+              ViewModel.currentItem(local);
+              fetch( "http://api.duckduckgo.com/?format=json&q="+p.name )
+                .then( function( res ){ return res.json(); })
+                .then( function( json ){ 
+                  ViewModel.fetcher.duckDuckGo.success(json);
+                })
+                .catch( function( json ){
+                  ViewModel.fetcher.duckDuckGo.fail();
+                })
+              };
+          })();
+          marker.addListener('click', closure());
         }
         map.fitBounds(bounds);
     },
@@ -181,8 +216,7 @@ var ViewModel = {
         }
         map.setCenter(ViewModel.neighborhood);
         ajax.json(ViewModel.fetcher.geocode.url + ViewModel.neighborhood.address(), ViewModel.fetcher.geocode.success, ViewModel.fetcher.geocode.fail);
-    },
-    message: []
+    }
 };
 
 
