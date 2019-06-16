@@ -45,7 +45,7 @@ Model[initialNeighborhood]= {
                     info: '', source:'', url:''
                 },
                 {
-                    name: 'Futsal court', description: 'A court for playing futsal, an indoors soccer', category: 'fun',
+                    name: 'Futsal', description: 'A court for playing futsal, an indoors soccer', category: 'fun',
                     lat: -15.806432, lng: -48.058767, type: 'places',
                     info: '', source:'', url:''
                 },

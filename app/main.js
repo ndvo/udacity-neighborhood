@@ -192,10 +192,8 @@ var ViewModel = {
           var closure = (function () {
             var local = p;
             return function(){
-              console.log('io');
               ViewModel.currentItem(local);
               fetch( "http://api.duckduckgo.com/?format=json&q="+p.name )
-                .then( function( res ){ res.json(); })
                 .then( function( res ){ return res.json(); })
                 .then( function( json ){ return ViewModel.fetcher.duckDuckGo.success(json); })
                 .catch( function( json ){ ViewModel.fetcher.duckDuckGo.fail(); })
