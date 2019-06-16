@@ -28,7 +28,6 @@ var ajax = {
         };
         request.open("GET", url);
         if (mediawiki){
-          console.log('tentando');
           //request.setRequestHeader("Origin", "http://localhost");
           request.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
         }
@@ -131,7 +130,6 @@ var ViewModel = {
             ViewModel.currentItem().info = response.AbstractText;
             ViewModel.currentItem().source = response.AbstractSource;
             ViewModel.currentItem().url = response.AbstractURL;
-            console.log("I'm here", ViewModel.currentItem());
           },
           fail: function(e){
             console.log('Error fetching additional info:', e);
@@ -194,18 +192,16 @@ var ViewModel = {
           var closure = (function () {
             var local = p;
             return function(){
+              console.log('io');
               ViewModel.currentItem(local);
               fetch( "http://api.duckduckgo.com/?format=json&q="+p.name )
+                .then( function( res ){ res.json(); })
                 .then( function( res ){ return res.json(); })
-                .then( function( json ){ 
-                  ViewModel.fetcher.duckDuckGo.success(json);
-                })
-                .catch( function( json ){
-                  ViewModel.fetcher.duckDuckGo.fail();
-                })
+                .then( function( json ){ return ViewModel.fetcher.duckDuckGo.success(json); })
+                .catch( function( json ){ ViewModel.fetcher.duckDuckGo.fail(); })
               };
           })();
-          marker.addListener('click', closure());
+          marker.addListener('click', closure);
         }
         map.fitBounds(bounds);
     },
