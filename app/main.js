@@ -127,9 +127,11 @@ var ViewModel = {
         duckDuckGo: {
           url: `https://api.duckduckgo.com/?format=json&q=$`,
           success: function(response){
-            ViewModel.currentItem().info = response.AbstractText;
-            ViewModel.currentItem().source = response.AbstractSource;
-            ViewModel.currentItem().url = response.AbstractURL;
+            var temp = ViewModel.currentItem()
+            temp.info = response.AbstractText ? response.AbstractText : 'No results from DuckDuckGo';
+            temp.source = response.AbstractSource;
+            temp.url = response.AbstractURL;
+            ViewModel.currentItem(temp);
           },
           fail: function(e){
             console.log('Error fetching additional info:', e);
@@ -193,7 +195,7 @@ var ViewModel = {
             var local = p;
             return function(){
               ViewModel.currentItem(local);
-              fetch( "http://api.duckduckgo.com/?format=json&q="+p.name )
+              fetch( "http://api.duckduckgo.com/?format=json&q="+local.name )
                 .then( function( res ){ return res.json(); })
                 .then( function( json ){ return ViewModel.fetcher.duckDuckGo.success(json); })
                 .catch( function( json ){ ViewModel.fetcher.duckDuckGo.fail(); })
